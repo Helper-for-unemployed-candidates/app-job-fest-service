@@ -2,6 +2,7 @@ package com.jobhunter.appjobfestservice.entity;
 
 
 import com.jobhunter.appjobfestservice.entity.template.AbsUUIDEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
@@ -19,7 +20,7 @@ public class Comment extends AbsUUIDEntity {
     private String text;
     private byte rate;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private JobApplication jobApplication;
 
 }

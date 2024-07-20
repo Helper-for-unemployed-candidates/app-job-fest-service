@@ -17,16 +17,16 @@ import java.util.UUID;
 public class JobApplication extends AbsUUIDEntity {
     private UUID userId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private JobType jobType;
 
     private String description;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Requirement requirements;
     private Status status;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Address address;
     private String title;
 }

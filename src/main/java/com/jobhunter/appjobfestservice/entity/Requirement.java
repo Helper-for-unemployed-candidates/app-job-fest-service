@@ -3,6 +3,7 @@ package com.jobhunter.appjobfestservice.entity;
 import com.jobhunter.appjobfestservice.entity.enums.AgeRange;
 import com.jobhunter.appjobfestservice.entity.enums.Experience;
 import com.jobhunter.appjobfestservice.entity.template.AbsUUIDEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.*;
@@ -17,7 +18,7 @@ import java.util.List;
 @Entity
 
 public class Requirement extends AbsUUIDEntity {
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<Skills> skills;
     private AgeRange ageFrom; // range
 
