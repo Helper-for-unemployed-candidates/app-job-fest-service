@@ -15,6 +15,8 @@ import java.util.UUID;
 public interface JobApplicationRepository extends JpaRepository<JobApplication, UUID> {
     // takes job with the first pattern letters
     Page<JobApplication> findJobApplicationByTitleContaining(String titlePattern, Pageable pageable);
+    Page<JobApplication> findJobApplicationById(Pageable pageable, UUID id);
+
     boolean deleteByIdAndUserId(UUID id, UUID userId);
     Optional<JobApplication> findByIdAndUserId(UUID id, UUID userId);
 }

@@ -40,10 +40,11 @@ public class JobApplicationController {
     @GetMapping("/all-jobs")
     public Response<Page<JobApplicationDTO>> getAllJobs
             (@RequestParam(value = "size", defaultValue = "10") int size,
-             @RequestParam(value = "page", defaultValue = "1") int page) {
+             @RequestParam(value = "page", defaultValue = "1") int page,
+             @PathVariable UUID id) {
         PageRequest pageRequest = PageRequest.of(size, page);
         log.info("Getting all job applications");
-        return Response.successResponse(service.findAll(pageRequest));
+        return Response.successResponse(service.findAll(pageRequest, id));
     }
 
     @PostMapping
@@ -71,6 +72,14 @@ public class JobApplicationController {
     public Response<List<JobCreateDTO>> createMultiple(@RequestBody List<JobCreateDTO> jobCreateDTO) {
         log.info("createMultiple: {}", jobCreateDTO);
         return Response.successResponse(service.createMultiple(jobCreateDTO));
+    }
+
+    @GetMapping("/search-by-title")
+    public Response<Page<JobApplicationDTO>> findByTitle(@RequestParam String title,
+                                                         @RequestParam(value = "size", defaultValue = "10") int size,
+                                                         @RequestParam(value = "page", defaultValue = "1") int page) {
+        Pageable pageRequest = PageRequest.of(size, page);
+        return Response.successResponse(service.findByTitle(title, pageRequest));
     }
 
 

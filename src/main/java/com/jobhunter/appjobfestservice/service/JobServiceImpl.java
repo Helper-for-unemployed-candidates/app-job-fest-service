@@ -7,10 +7,8 @@ import com.jobhunter.appjobfestservice.entity.JobApplication;
 import com.jobhunter.appjobfestservice.exceptions.RestException;
 import com.jobhunter.appjobfestservice.mappers.JobApplicationMapper;
 import com.jobhunter.appjobfestservice.repositories.JobApplicationRepository;
-import com.jobhunter.appjobfestservice.shit.payload.Response;
 import com.jobhunter.appjobfestservice.shit.payload.UserPrincipal;
 import com.jobhunter.appjobfestservice.shit.utils.ConstantFields;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
@@ -22,8 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -59,11 +57,10 @@ public class JobServiceImpl implements JobService {
 
         log.info("Updating job ...");
         JobApplication existingJob = repository.findByIdAndUserId(id, user.getId())
-                .orElseThrow(()-> RestException.restThrow("Job application not found with id: \" + id"));
+                .orElseThrow(() -> RestException.restThrow("Job application not found with id: " + id));
 
         mapper.updateJobApplication(existingJob, jobUpdateDTO);
         JobApplicationDTO dto = mapper.toDto(existingJob);
-        log.info("Updated successfully !");
         repository.save(existingJob);
         return dto;
     }
@@ -74,34 +71,32 @@ public class JobServiceImpl implements JobService {
         log.info("Retrieving job application ...");
         JobApplication jobApplication = repository
                 .findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Job application not found with userId: " + id));
+                .orElseThrow(() -> RestException.restThrow("Job application not found with userId:  " + id));
         return mapper.toDto(jobApplication);
 
     }
 
     @Override
-//    @Cacheable(value = "jobApplicationDto", key = "#keyGenerator")
-    public Page<JobApplicationDTO> findAll(Pageable pageable) {
+    public Page<JobApplicationDTO> findAll(Pageable pageable, UUID jobApplicationId) {
         log.info("Finding all job applications ...");
-        Page<JobApplication> all = repository.findAll(pageable);
-//        Page<JobApplicationDTO> mappedToDto = all.map(mapper::toDto);
-        return all.map(mapper::toDto);
+        Page<JobApplication> all = repository.findJobApplicationById(pageable, jobApplicationId);
 
+        return mapper.toPageDTO(all);
     }
 
     @Override
     @CacheEvict(value = "jobApplications", key = "#id")
     public void deleteById(UUID id) {
         UserPrincipal user = ConstantFields.currentUser();
-        repository.deleteByIdAndUserId(id,user.getId());
+        repository.deleteByIdAndUserId(id, user.getId());
     }
 
     @Override
     @Cacheable(value = "jobApplicationDTO", key = "#keyGenerator")
-    public Response<Page<JobApplicationDTO>> findByTitle(String title, Pageable pageable) {
+    public Page<JobApplicationDTO> findByTitle(String title, Pageable pageable) {
         log.info("Finding job applications by title ...");
         Page<JobApplication> application = repository.findJobApplicationByTitleContaining(title, pageable);
-        return Response.successResponse(mapper.toPageDTO(application));
+        return mapper.toPageDTO(application);
     }
 
 }
