@@ -1,22 +1,14 @@
-package com.jobhunter.appjobfestservice.entity;
+package com.jobhunter.appjobfestservice.dto;
 
-
-import com.jobhunter.appjobfestservice.entity.template.AbsUUIDEntity;
+import com.jobhunter.appjobfestservice.entity.ChatStatus;
+import com.jobhunter.appjobfestservice.entity.JobApplication;
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
-import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-@Entity
-public class Chat extends AbsUUIDEntity {
+public class ChatCreateDTO {
     //    private String name;
     private UUID applicantId;
     private UUID companyId;
@@ -30,5 +22,4 @@ public class Chat extends AbsUUIDEntity {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     private JobApplication jobApplication;
-
 }
