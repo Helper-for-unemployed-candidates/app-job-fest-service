@@ -1,32 +1,27 @@
 package com.jobhunter.appjobfestservice.entity;
 
 import com.jobhunter.appjobfestservice.entity.enums.Status;
-import com.jobhunter.appjobfestservice.entity.template.AbsUUIDEntity;
-import jakarta.persistence.*;
+import com.jobhunter.appjobfestservice.entity.template.AbsStringEntity;
 import lombok.*;
-
-import java.util.UUID;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
-@Table(name = "job_app")
-public class JobApplication extends AbsUUIDEntity {
-    private UUID userId;
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
+@Document
+public class JobApplication extends AbsStringEntity {
+    @DBRef
     private JobType jobType;
 
     private String description;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @DBRef
     private Requirement requirements;
     private Status status;
-
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @DBRef
     private Address address;
     private String title;
 }

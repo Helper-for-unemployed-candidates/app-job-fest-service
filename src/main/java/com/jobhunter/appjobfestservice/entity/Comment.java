@@ -1,11 +1,9 @@
 package com.jobhunter.appjobfestservice.entity;
 
-
-import com.jobhunter.appjobfestservice.entity.template.AbsUUIDEntity;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import com.jobhunter.appjobfestservice.entity.template.AbsStringEntity;
 import lombok.*;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.UUID;
 
@@ -14,13 +12,12 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
-public class Comment extends AbsUUIDEntity {
+@Document
+public class Comment extends AbsStringEntity {
     private UUID userId;
     private String text;
     private byte rate;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @DBRef
     private JobApplication jobApplication;
-
 }

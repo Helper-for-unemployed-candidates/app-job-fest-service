@@ -32,18 +32,24 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public JobCreateDTO create(JobCreateDTO jobCreateDTO) {
+        UserPrincipal user = ConstantFields.currentUser();
         log.info("Creating job ...");
         JobApplication jobApplication = mapper.createJobApplication(jobCreateDTO);
         log.info("Successfully created a job !");
+        jobApplication.setCreatedById(user.getId());
         repository.save(jobApplication);
         return jobCreateDTO;
     }
 
     @Override
     public List<JobCreateDTO> createMultiple(List<JobCreateDTO> jobCreateDTO) {
+        UserPrincipal user = ConstantFields.currentUser();
         log.info("Creating multiple job ...");
-
-        List<JobApplication> createList = mapper.toCreateListDTO(jobCreateDTO);
+        List<JobApplication> createList = jobCreateDTO.stream().map(job -> {
+            JobApplication jobApplication = mapper.createJobApplication(job);
+            jobApplication.setCreatedById(user.getId());
+            return jobApplication;
+        }).toList();
         log.info("Successfully created multiple job !");
         repository.saveAll(createList);
         return mapper.listEntityToCreateDto(createList);
@@ -52,11 +58,11 @@ public class JobServiceImpl implements JobService {
     @Override
     @Transactional
     @CachePut(value = "jobApplications", key = "keyGenerator")
-    public JobApplicationDTO update(UUID id, JobUpdateDTO jobUpdateDTO) {
+    public JobApplicationDTO update(String id, JobUpdateDTO jobUpdateDTO) {
         UserPrincipal user = ConstantFields.currentUser(); // authorized
 
         log.info("Updating job ...");
-        JobApplication existingJob = repository.findByIdAndUserId(id, user.getId())
+        JobApplication existingJob = repository.findByIdAndCreatedById(id, user.getId())
                 .orElseThrow(() -> RestException.restThrow("Job application not found with id: " + id));
 
         mapper.updateJobApplication(existingJob, jobUpdateDTO);
@@ -67,7 +73,7 @@ public class JobServiceImpl implements JobService {
 
     @Override
     @Cacheable(value = "jobApplication", key = "#id")
-    public JobApplicationDTO findById(UUID id) {
+    public JobApplicationDTO findById(String id) {
         log.info("Retrieving job application ...");
         JobApplication jobApplication = repository
                 .findById(id)
@@ -86,9 +92,9 @@ public class JobServiceImpl implements JobService {
 
     @Override
     @CacheEvict(value = "jobApplications", key = "#id")
-    public void deleteById(UUID id) {
+    public void deleteById(String id) {
         UserPrincipal user = ConstantFields.currentUser();
-        repository.deleteByIdAndUserId(id, user.getId());
+        repository.deleteByIdAndCreatedById(id, user.getId());
     }
 
     @Override

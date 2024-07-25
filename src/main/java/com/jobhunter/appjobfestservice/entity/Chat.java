@@ -1,11 +1,10 @@
 package com.jobhunter.appjobfestservice.entity;
 
 
-import com.jobhunter.appjobfestservice.entity.template.AbsUUIDEntity;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import com.jobhunter.appjobfestservice.entity.template.AbsStringEntity;
 import lombok.*;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -15,8 +14,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
-public class Chat extends AbsUUIDEntity {
+@Document
+public class Chat extends AbsStringEntity {
     //    private String name;
     private UUID applicantId;
     private UUID companyId;
@@ -27,8 +26,7 @@ public class Chat extends AbsUUIDEntity {
     private LocalDateTime blockedAt;
     private ChatStatus status;
 
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @DBRef
     private JobApplication jobApplication;
 
 }

@@ -12,9 +12,9 @@ import java.util.UUID;
 public interface JobService {
     JobCreateDTO create(JobCreateDTO jobCreateDTO);
     List<JobCreateDTO> createMultiple(List<JobCreateDTO> jobCreateDTO);
-    JobApplicationDTO update(UUID id, JobUpdateDTO jobUpdateDTO);
-    JobApplicationDTO findById(UUID id);
+    JobApplicationDTO update(String id, JobUpdateDTO jobUpdateDTO);
+    JobApplicationDTO findById(String id);
     Page<JobApplicationDTO> findAll(Pageable pageable, UUID jobApplicationId);
-    void deleteById(UUID id);
+    void deleteById(String id);
     Page<JobApplicationDTO> findByTitle(String name,Pageable pageable);
 }

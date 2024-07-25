@@ -10,6 +10,7 @@ import java.util.Objects;
 public interface ConstantFields {
     String USER = "user";
     String AUTH_HEADER = "Authorization";
+    String BASE_PATH = "/api/v1/j";
 
     static UserPrincipal currentUser() {
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();

@@ -1,12 +1,10 @@
 package com.jobhunter.appjobfestservice.entity;
 
 import com.jobhunter.appjobfestservice.entity.enums.AgeRange;
-import com.jobhunter.appjobfestservice.entity.enums.Experience;
-import com.jobhunter.appjobfestservice.entity.template.AbsUUIDEntity;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import com.jobhunter.appjobfestservice.entity.enums.ExperienceEnum;
+import com.jobhunter.appjobfestservice.entity.template.AbsStringEntity;
 import lombok.*;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
@@ -15,12 +13,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
-
-public class Requirement extends AbsUUIDEntity {
-    @OneToMany(cascade = CascadeType.PERSIST)
-    private List<Skills> skills;
+@Document
+public class Requirement extends AbsStringEntity {
+    private List<String> skills;
     private AgeRange ageFrom; // range
-
-    private Experience experience;
+    private ExperienceEnum experience;
 }
