@@ -2,8 +2,6 @@ package com.jobhunter.appjobfestservice.dto;
 
 import com.jobhunter.appjobfestservice.entity.ChatStatus;
 import com.jobhunter.appjobfestservice.entity.JobApplication;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.ManyToOne;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -20,6 +18,6 @@ public class ChatCreateDTO {
     private ChatStatus status;
 
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+//    @ManyToOne(cascade = CascadeType.PERSIST)
     private JobApplication jobApplication;
 }

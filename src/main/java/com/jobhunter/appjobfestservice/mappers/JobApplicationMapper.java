@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 public interface JobApplicationMapper {
 
     @Mapping(target = "description", source = "description")
-
     JobApplication createJobApplication(JobCreateDTO jobCreateDTO);
 
     @Mapping(target = "id", ignore = true)

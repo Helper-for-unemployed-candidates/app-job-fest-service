@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class RequirementDTO  {
-    private List<SkillsDTO> skills;
+    private List<String> skills;
     private AgeRange ageFrom; // range
     private ExperienceEnum experience;
 }

@@ -199,11 +199,11 @@ public class ResumeServiceImpl implements ResumeService {
     }
 
     /*TODO they must be completed tomorrow   25 JULY
-     * 1. complete resume section inside of job-service done
-     * 2. complete the controller class of submission
+     * 1. complete resume section inside of job-service -> done
+     * 2. complete the controller class of submission -> done
      * 3. chat system integration
      * 4. AI integration
-     * 5. DOCUMENTATION
+     * 5. DOCUMENTATION -> done
      * 6.
      * */
 }

@@ -15,5 +15,6 @@ public class JobType extends AbsStringEntity {
     private String name;
 
     @DBRef
+
     private Category category;
 }
