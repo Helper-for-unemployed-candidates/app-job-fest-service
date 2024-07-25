@@ -1,9 +1,9 @@
 package com.jobhunter.appjobfestservice.entity;
 
-import com.jobhunter.appjobfestservice.entity.template.AbsUUIDEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import com.jobhunter.appjobfestservice.entity.template.AbsStringEntity;
 import lombok.*;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.UUID;
 
@@ -13,9 +13,9 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
-public class Message extends AbsUUIDEntity {
-    @ManyToOne
+@Document
+public class Message extends AbsStringEntity {
+    @DBRef
     private Chat chat;
     private String content;
     private UUID senderId;

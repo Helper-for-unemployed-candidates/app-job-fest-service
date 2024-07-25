@@ -1,7 +1,5 @@
 package com.jobhunter.appjobfestservice.entity.template;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,11 +15,9 @@ import java.util.UUID;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-@MappedSuperclass
 public abstract class AbsAuditingEntity extends AbsDateAuditingEntity {
 
     @CreatedBy
-    @Column(updatable = false)
     private UUID createdById;
 
     @LastModifiedBy

@@ -38,14 +38,14 @@ public class CommentServiceImpl implements CommentService {
 
 
     @Override
-    public Page<CommentDTO> findAll(Pageable pageable, UUID jobApplicationId) {
+    public Page<CommentDTO> findAll(Pageable pageable, String jobApplicationId) {
         Page<Comment> all = commentRepository.findAllByJobApplicationId(jobApplicationId, pageable);
         return commentMapper.toPageDTO(all);
     }
 
     @Override
     @Cacheable(value = "comment", key = "#id")
-    public CommentDTO getComment(UUID id) {
+    public CommentDTO getComment(String id) {
         Comment comment = commentRepository
                 .findById(id)
                 .orElseThrow(() -> RestException.restThrow("Comment not found"));
@@ -54,7 +54,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @CacheEvict(value = "comment", key = "#id")
-    public void deleteComment(UUID id) {
+    public void deleteComment(String id) {
         UserPrincipal user = ConstantFields.currentUser();
         commentRepository.deleteByIdAndUserId(id, user.getId());
     }

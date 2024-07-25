@@ -2,8 +2,8 @@ package com.jobhunter.appjobfestservice.entity;
 
 import com.jobhunter.appjobfestservice.entity.template.AbsStringEntity;
 import lombok.*;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 @Getter
 @Setter
@@ -11,9 +11,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Builder
 @Document
-public class JobType extends AbsStringEntity {
+public class Specialization extends AbsStringEntity {
     private String name;
 
-    @DBRef
-    private Category category;
+    @DocumentReference
+    private Faculty faculty;
 }

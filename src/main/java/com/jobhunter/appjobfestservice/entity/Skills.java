@@ -1,15 +1,15 @@
 package com.jobhunter.appjobfestservice.entity;
 
-import com.jobhunter.appjobfestservice.entity.template.AbsUUIDEntity;
-import jakarta.persistence.Entity;
+import com.jobhunter.appjobfestservice.entity.template.AbsStringEntity;
 import lombok.*;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
-public class Skills extends AbsUUIDEntity {
+@Document
+public class Skills extends AbsStringEntity {
    private String name;
 }

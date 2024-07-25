@@ -1,10 +1,9 @@
 package com.jobhunter.appjobfestservice.entity;
 
-import com.jobhunter.appjobfestservice.entity.template.AbsUUIDEntity;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import com.jobhunter.appjobfestservice.entity.template.AbsStringEntity;
 import lombok.*;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 
 @Getter
@@ -12,10 +11,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
-public class Address extends AbsUUIDEntity {
-    @ManyToOne(cascade = CascadeType.PERSIST)
+@Document
+public class Address extends AbsStringEntity {
+    @DBRef
     private City city;
     private String fullAddress;
-
 }

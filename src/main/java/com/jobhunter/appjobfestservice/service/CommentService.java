@@ -9,11 +9,9 @@ import java.util.UUID;
 public interface CommentService {
     CommentDTO writeComment(CommentDTO dto);
 
-    Page<CommentDTO> findAll(Pageable pageable,UUID applicationId);
+    Page<CommentDTO> findAll(Pageable pageable, String applicationId);
 
-    CommentDTO getComment(UUID id) ;
+    CommentDTO getComment(String id);
 
-    void deleteComment(UUID id) ;
-
-
+    void deleteComment(String id);
 }

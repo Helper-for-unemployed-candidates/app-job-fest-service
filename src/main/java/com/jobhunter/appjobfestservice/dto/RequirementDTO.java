@@ -1,9 +1,7 @@
 package com.jobhunter.appjobfestservice.dto;
 
-import com.jobhunter.appjobfestservice.entity.Requirement;
-import com.jobhunter.appjobfestservice.entity.Skills;
 import com.jobhunter.appjobfestservice.entity.enums.AgeRange;
-import com.jobhunter.appjobfestservice.entity.enums.Experience;
+import com.jobhunter.appjobfestservice.entity.enums.ExperienceEnum;
 import lombok.*;
 
 import java.util.List;
@@ -16,5 +14,5 @@ import java.util.List;
 public class RequirementDTO  {
     private List<SkillsDTO> skills;
     private AgeRange ageFrom; // range
-    private Experience experience;
+    private ExperienceEnum experience;
 }

@@ -8,6 +8,7 @@ import com.jobhunter.appjobfestservice.service.JobService;
 import com.jobhunter.appjobfestservice.shit.aop.Authorize;
 import com.jobhunter.appjobfestservice.shit.enums.RoleEnum;
 import com.jobhunter.appjobfestservice.shit.payload.Response;
+import com.jobhunter.appjobfestservice.shit.utils.ConstantFields;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -25,14 +26,15 @@ import java.util.UUID;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/api/job-fests")
+@RequestMapping(JobApplicationController.BASE_PATH)
 public class JobApplicationController {
+    public static final String BASE_PATH = ConstantFields.BASE_PATH + "/job";
 
     private final JobService service;
 
 
     @GetMapping("/{id}")
-    public Response<JobApplicationDTO> getJobByID(@PathVariable UUID id) {
+    public Response<JobApplicationDTO> getJobByID(@PathVariable String id) {
         log.info("Getting job application by ID: {}", id);
         return Response.successResponse(service.findById(id));
     }
@@ -56,19 +58,21 @@ public class JobApplicationController {
 
     @PutMapping("/{id}")
     @Authorize(permissions = RoleEnum.COMPANY)
-    public Response<JobApplicationDTO> updateJob(@PathVariable UUID id, @RequestBody JobUpdateDTO dto) {
+    public Response<JobApplicationDTO> updateJob(@PathVariable String id, @RequestBody JobUpdateDTO dto) {
         log.info("updateJob: {}", dto);
         return Response.successResponse(service.update(id, dto));
     }
 
     @DeleteMapping("/{id}")
-    public Response<Void> deleteJob(@PathVariable UUID id) {
+    @Authorize(permissions = RoleEnum.COMPANY)
+    public Response<Void> deleteJob(@PathVariable String id) {
         log.info("deleteJob: {}", id);
         service.deleteById(id);
         return Response.successResponse();
     }
 
     @PostMapping("/write-all")
+    @Authorize(permissions = {RoleEnum.COMPANY})
     public Response<List<JobCreateDTO>> createMultiple(@RequestBody List<JobCreateDTO> jobCreateDTO) {
         log.info("createMultiple: {}", jobCreateDTO);
         return Response.successResponse(service.createMultiple(jobCreateDTO));
