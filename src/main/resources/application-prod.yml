@@ -32,9 +32,9 @@ management:
 
 springdoc:
   api-docs:
-    path: /api/v1/e/api-docs
+    path: /api/v1/j/api-docs
   swagger-ui:
-    path: /api/v1/e/swagger-ui.html
+    path: /api/v1/j/swagger-ui.html
 
   data: ## default it uses host: localhost and port: 6379
     redis:
