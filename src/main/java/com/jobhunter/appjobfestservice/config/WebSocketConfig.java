@@ -1,4 +1,4 @@
-package com.jobhunter.appjobfestservice.websocket_chat_system.config;
+package com.jobhunter.appjobfestservice.config;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,7 +17,6 @@ import java.util.List;
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
-
 
     /**
      * Purpose: This method configures the message converters used to convert messages to and from the WebSocket channel.
@@ -38,7 +37,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
      **/
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        /**
+        /*
          * registry.addEndpoint("/ws").withSockJS();:
          *
          * Registers the /ws endpoint, which clients will use to connect to the WebSocket server.

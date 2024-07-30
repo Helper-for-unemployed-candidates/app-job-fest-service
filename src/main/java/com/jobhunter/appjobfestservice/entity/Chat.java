@@ -3,8 +3,9 @@ package com.jobhunter.appjobfestservice.entity;
 
 import com.jobhunter.appjobfestservice.entity.template.AbsStringEntity;
 import lombok.*;
-import org.springframework.data.mongodb.core.mapping.DBRef;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -13,10 +14,9 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 @Document
 public class Chat extends AbsStringEntity {
-    //    private String name;
     private UUID applicantId;
     private UUID companyId;
 
@@ -26,7 +26,9 @@ public class Chat extends AbsStringEntity {
     private LocalDateTime blockedAt;
     private ChatStatus status;
 
-    @DBRef
+    @DocumentReference(lazy = true)
     private JobApplication jobApplication;
 
+    @DocumentReference(lazy = true)
+    private Resume resume;
 }
